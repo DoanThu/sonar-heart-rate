@@ -3,7 +3,7 @@
 2. [Background](#background)
     1. [Measure distance using FMCW](#distance)
     2. [Measure heart rate using FMCW](#heartrate)
-
+3. [Getting started](#started)
 
 
 
@@ -42,17 +42,20 @@ x_m(t) = x(t) \cdot x'(t) = \frac{\alpha}{2}\Bigl(cos\bigl(2\pi(f_0\tau - \frac{
 $$
 
 The mixed signal consists of two terms. By taking the derivative of the phase by $t$, we have the frequency of the first term that is a constant, $\Delta f = \frac{B}{T}\tau=\frac{2BR}{Tc}$. This implies that **every range $R$ maps to a specific frequency $\Delta f$**. The second term is a function of $t$ with high frequency and can be removed by a low pass filter. In the end, after the multiplication and a low pass filter, we have:
+
 $$
  x_m(t)=\frac{\alpha}{2} \cdot exp\bigl(j2\pi(f_0\tau - \frac{B(\tau^2 - 2t\tau)}{2T})\bigr)
 $$
 
 By transforming the frequency of $x_m(t)$, we have:
+
 $$  R=\frac{cT}{2B}\Delta f  $$
 
 ## Measure heart rate using FMCW <a name="heartrate"></a>
 Given a typical bandwidth of $B=5 kHz$ ($f_0$ is usually18 kHz) in audio sensing, the resolution of $R$ is $\delta R \geq \frac{cT}{2B}\delta f = \frac{cT}{2B} \cdot \frac{1}{T} = \frac{343}{2\cdot5000}=3.43 cm$. This resolution is not enough to monitor heartbeat-induced chest displacement $\Delta d$, which is approximately 0.1 - 0.5 mm.
 
 Literature has demonstrated that the minute chest displacement $\Delta d$ can cause the phase change in $x_{mf}(t)$ up to 18&deg;. Specifically, $x_{mf}(t)$ can be expressed as:
+
 $$
 x_{mf}(t) = \frac{\alpha}{2} \cdot exp\Bigl[j(2\pi f_0 \tau - \frac{\pi B \tau^2}{T} + \frac{2 \pi t \tau B}{T})\Bigr] \\ 
 \approx \frac{\alpha}{2} \cdot exp\Bigl[j(2\pi f_0 \tau + \frac{2 \pi t \tau B}{T})\Bigr] \\ 
@@ -61,12 +64,14 @@ x_{mf}(t) = \frac{\alpha}{2} \cdot exp\Bigl[j(2\pi f_0 \tau - \frac{\pi B \tau^2
 $$
 
 As such, if the chest displacement caused by heartbeat is 0.5mm, the phase change is calculated as:
+
 $$
     \frac{4\pi f_0}{c}\Delta d = \frac{4\pi \cdot 18000 \cdot 0.0005}{343} = 0.105 \pi = 18.9 ^{\circ}
 $$
+
 This number is significant enough to see, while it is not if we look at distance $R$.
 
-# Getting started
+# Getting started <a name="started"></a>
 1. To generate chirp file, run: `python gen_chirp.py`. A chirp with params in file `config.py` will be created.
 
 2. Set up the measurement as explained in Introduction.
